@@ -116,7 +116,7 @@ class PositionalEncoding(nn.Module):
         
     def forward(self, x):
         seq_length = x.size(1)
-        return x + self.out[:seq_length].unsqueeze(0).to(x.device) # auto-cast from (1, S, D) -> (B, S, D)
+        return x + self.out[:seq_length].unsqueeze(0).to(x.device, dtype=x.dtype) # auto-cast from (1, S, D) -> (B, S, D)
 
 class Encoder(nn.Module):
     def __init__(self, d_model, num_heads, d_ff, dropout):
@@ -228,11 +228,11 @@ class Transformer(nn.Module):
         tgt_mask = self.create_combined_mask(tgt, pad_token_id=0)
 
         # Encoder
-        src_embed = self.pe(self.encoder_embedding(src))
+        src_embed = self.dropout(self.pe(self.encoder_embedding(src)))
         enc_out = self.encoder_stack(src_embed, src_mask)
 
         # Decoder
-        tgt_embed = self.decoder_embedding(self.pe(tgt_embed))
+        tgt_embed = self.dropout(self.pe(self.decoder_embedding(tgt)))
         dec_out = self.decoder_stack(tgt_embed, enc_out, src_mask, tgt_mask)
 
         # Output projection
