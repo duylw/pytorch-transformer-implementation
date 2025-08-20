@@ -52,11 +52,11 @@ class MultiHeadAttention(nn.Module):
         return out
 
             
-    def forward(self, x_q, q_k, q_v, mask=None):
+    def forward(self, x_q, x_k, x_v, mask=None):
         # Compute Q, K, V
         Q = self.split_heads(self.W_q(x_q))
-        K = self.split_heads(self.W_k(q_k))
-        V = self.split_heads(self.W_v(q_v))
+        K = self.split_heads(self.W_k(x_k))
+        V = self.split_heads(self.W_v(x_v))
 
         # Compute attention
         attention_output = self.scaled_dot_product_attention(Q, K, V, mask)
