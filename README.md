@@ -1,4 +1,6 @@
-This project provides a simple, educational implementation of the Transformer architecture from scratch using Python and PyTorch.# Simple Transformer (PyTorch)
+# Simple Transformer (PyTorch)
+
+This project provides a simple, educational implementation of the Transformer architecture from scratch using Python and PyTorch.
 
 Minimal from-scratch implementation of an encoder–decoder Transformer with:
 - Custom Multi-Head Attention (batch-first, (B,S,D))
